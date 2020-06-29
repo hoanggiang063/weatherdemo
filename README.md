@@ -77,7 +77,10 @@
    ./gradlew :business:testDebugUnitTest
    ./gradlew :repository:testDebugUnitTest
 ### In order to only verify decompike apk or rooted device, please run below command:
+- Using below command to create a apk test file
 ./gradlew clean assembleProRelease
+- Or creating apk test file and install it
+./gradlew clean installProRelease
 
 ## What I done so far?
 ### Business checklist:

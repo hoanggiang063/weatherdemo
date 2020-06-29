@@ -114,13 +114,13 @@ class WeatherFragment : Fragment() {
     }
 
     private fun listenFailData() {
-        val failDefaultObserver = Observer<Throwable> { data ->
+        val failDefaultObserver = Observer<Throwable> { _ ->
             showError(getString(R.string.defaultFailMessage))
             clearScreenData()
         }
         viewModel.failedException.observe(this, failDefaultObserver)
 
-        val failTechnicalObserver = Observer<Throwable> { data ->
+        val failTechnicalObserver = Observer<Throwable> { _ ->
             showError(getString(R.string.technicalFailMessage))
             clearScreenData()
         }
