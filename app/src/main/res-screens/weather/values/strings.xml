@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Weather Forecast</string>
+    <string name="btnGetWeather">Get Weather</string>
+    <string name="searchViewHint">Search for City</string>
+
+    <string name="weatherItemDate">Date: %s</string>
+    <string name="weatherItemTemperature">Average temperature: %s°C</string>
+    <string name="weatherItemPressure">Pressure: %s</string>
+    <string name="weatherItemHumidity">Humidity: %s</string>
+    <string name="weatherItemDescription">Description: %s</string>
+
+    <string name="defaultFailMessage">Something went wrong!</string>
+    <string name="technicalFailMessage">Something went wrong please check IO connection</string>
+    <string name="businessFailMessage">Fail by load data, Error: %s, reason: %s</string>
+
+    <string name="unsafeMessage">You may run app in unsafe device, please change device or use internet version.</string>
+    <string name="btnExit">Exit</string>
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:iconifiedByDefault="false"
+        android:contentDescription="@string/searchViewHint"
+        app:queryHint="@string/searchViewHint" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGetWeather"
+        android:layout_width="@dimen/defaultButtonWidth"
+        android:layout_height="@dimen/defaultButtonHeight"
+        android:layout_marginTop="@dimen/defaultPadding"
+        android:layout_marginBottom="@dimen/defaultPadding"
+        android:contentDescription="@string/btnGetWeather"
+        android:text="@string/btnGetWeather" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerForeCast"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
+</androidx.appcompat.widget.LinearLayoutCompat>

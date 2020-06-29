@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/WeatherItem"
+        android:padding="@dimen/defaultPadding"
+        android:text="@string/unsafeMessage"
+        android:textSize="@dimen/unsafeFont"
+        android:contentDescription="@string/unsafeMessage"
+        app:iconifiedByDefault="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnExit"
+        android:layout_width="@dimen/defaultButtonWidth"
+        android:layout_height="@dimen/defaultButtonHeight"
+        android:layout_marginTop="@dimen/defaultPadding"
+        android:layout_marginBottom="@dimen/defaultPadding"
+        android:contentDescription="@string/btnExit"
+        android:text="@string/btnExit" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

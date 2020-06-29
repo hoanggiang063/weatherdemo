@@ -1,0 +1,112 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+apply plugin: 'dexprotector'
+buildscript {
+    repositories {
+        flatDir { dirs '../dexprotector' }
+    }
+    dependencies {
+        classpath ':dexprotector-gradle-plugin'
+        classpath ':dexprotector'
+    }
+}
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+
+    signingConfigs {
+        release {
+            keyAlias 'android'
+            keyPassword 'android'
+            storeFile file("../sample.keystore")
+            storePassword 'android'
+        }
+        release {
+            keyAlias 'android'
+            keyPassword 'android'
+            storeFile file("../sample.keystore")
+            storePassword 'android'
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.architecture.cleanmvvm"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        signingConfig signingConfigs.debug
+    }
+    buildTypes {
+
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            minifyEnabled false //using dexprotector to optimize instead of default
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ext.set("dexprotector.configFile", "${projectDir}/dexprotector.xml")
+            signingConfig signingConfigs.release
+        }
+    }
+
+    def dimenDefault = "dimenDefault"
+    productFlavors {
+        flavorDimensions dimenDefault
+
+        sit {
+            dimension = dimenDefault
+        }
+        pro {
+            dimension = dimenDefault
+        }
+    }
+
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    'src/main/res-screens/common',
+                    'src/main/res-screens/weather',
+            ]
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.core:core-ktx:$coreKtxVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation "androidx.recyclerview:recyclerview:$recyclerviewVersion"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinxCoroutinesVersion"
+    implementation "org.jetbrains.anko:anko:$ankoVersion"
+
+    // KOIN
+    implementation "org.koin:koin-android:$koinVersion"
+    implementation "org.koin:koin-android-viewmodel:$koinVersion"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+
+    implementation "androidx.sqlite:sqlite:$sqliteVersion"
+
+    implementation project(':business')
+    implementation project(':repository')
+
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinTestJunitVersion"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
+    testImplementation "androidx.test:rules:$testRulesVersion"
+    testImplementation "org.assertj:assertj-core:$assertjVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoCoreVersion"
+    testImplementation "com.android.support.test:testing-support-lib:$testingSupportLibVersion"
+    testImplementation "androidx.arch.core:core-testing:$archCoreTestingVersion"
+    testImplementation "org.mockito:mockito-android:$mockitoAndroid"
+}

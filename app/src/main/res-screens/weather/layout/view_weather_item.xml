@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lnWeatherContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bgWeatherItemColor"
+    android:orientation="vertical"
+    android:padding="@dimen/weatherItemContainerPadding">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvWeatherDate"
+        style="@style/WeatherItem"
+        tools:text="Date" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvWeatherTemperature"
+        style="@style/WeatherItem"
+        tools:text="Average temperature" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvWeatherPressure"
+        style="@style/WeatherItem"
+        tools:text="Pressure" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvWeatherHumidity"
+        style="@style/WeatherItem"
+        tools:text="Humidity" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvWeatherDescription"
+        style="@style/WeatherItem"
+        tools:text="Description" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

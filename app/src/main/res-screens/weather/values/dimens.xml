@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="defaultButtonHeight">48dp</dimen>
+    <dimen name="defaultButtonWidth">120dp</dimen>
+    <!-- for weather fragment -->
+    <dimen name="defaultPadding">8dp</dimen>
+    <!-- for weather item -->
+    <dimen name="weatherItemFontSize">14sp</dimen>
+    <dimen name="weatherItemContainerPadding">8dp</dimen>
+    <dimen name="weatherListViewPadding">8dp</dimen>
+
+    <dimen name="unsafeFont">18sp</dimen>
+</resources>
