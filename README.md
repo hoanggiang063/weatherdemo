@@ -190,4 +190,4 @@ In the source code you can find at
 - Build a base class for Viewmodel, in base we will handle common cases such common failures cases.
 - Maybe we try to apply navigation among fragments.
 - Add mock modules for development, let say we test with mock when we wait for real api.
-- Add feature toggle to turn on/off new feature(maybe local
+- Add feature toggle to turn on/off new feature(maybe local)
