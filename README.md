@@ -182,3 +182,12 @@ In the source code you can find at
 - Status: done
 - Note: add configuration to activity to apply font-change in the system.
 11. Please refer documents for database and clean architecture at path/weatherdemo/diagram
+
+## Need to improve
+- Add ignore classes to dexprotector, so we can run release build in unrooted device
+- Modularization: separate features in modules in order to keep it clean, decoupling
+- Add BBD(business driven development) to test usecase and repository by using Cucumber.
+- Build a base class for Viewmodel, in base we will handle common cases such common failures cases.
+- Maybe we try to apply navigation among fragments.
+- Add mock modules for development, let say we test with mock when we wait for real api.
+- Add feature toggle to turn on/off new feature(maybe local
