@@ -5,16 +5,16 @@
 - Reference: https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
 
 ### For source code, I applied Clean code guideline such as:
-- Variable name should be meaningfully
+- Variable name should be meaningful
 - Function just do one thing
-- Class just service for one actor
+- Class just serve for one actor
 - Modules should call each other via interfaces
 - Source code is arranged by features not by function
 - Code must be testable
 - Shouldn't have a large source code file
-- Format code, optimize import, check error and warning to fix
+- Format code, optimize import, check error and warning to fix (optional)
 
-### Follow SOLID principles:
+### Follow SOLID principles to design classes:
 - SRP – Single Responsibility Principle.
 - OCP – Open/Closed Principle.
 - LSP – Liskov Substitution Principle.
@@ -26,12 +26,12 @@
 ### Using dexprotector for root, emulator detection, decompile apk:
 - Reference: https://dexprotector.com
 ### Using Observer pattern to monitor data
-### Using DI to decouple object, make it easier test
-### Config multi environment for testing, deploy production.
+### Using Dependency injection to decouple object, make it easier to test
+### Configure multi environments for testing, production.
 
 ## Code structure
-### app module: presentation layer, include UI code
-- /src/main -> for feature
+### app module: presentation layer which included UI code
+- /src/main -> for UI feature
 - /src/pro --> for config production environment
 - /src/sit --> for config test environment
 - /src/../core -> common things which used in application.
@@ -46,7 +46,7 @@
 - /src/../weather/callback --> provide interface to notify result to viewmodel.
 
 ### repository module: data layer, include data code
-- /src/../weather/remote/model -> include model to retrieve back-end data
+- /src/../weather/remote/model -> include model to retrieve back-end data (Object from Gson)
 - /src/../weather/remote/repository -> include a implementation of repository in usecase(network)
 - /src/../weather/remote/service -> include retrofit service
 - /src/../weather/local/model -> include model to retrieve database
@@ -55,12 +55,12 @@
 - /src/../weather/cache/repository -> include a implementation of repository in usecase (combine)
 
 ## Java/Kotlin libraries and frameworks:
-- Architecture: Clean+ MVVM
+- Architecture: Clean + MVVM
 - Dependency Injection: Koin
 - Network call: Retrofit + OkHttp
 - Json parser: Gson
 - Cache: Using SqlCipher
-- Muti-thread: Kotlin Coroutine
+- Multi-thread: Kotlin Coroutine
 - Testing: Mockito
 - DAO: Room
 - Observer data: LiveData
@@ -69,21 +69,30 @@
 ## How to run?
 ### Please run below commands:
 - Using below command to create a apk test file
+```
 ./gradlew clean assembleSitDebug
+```
 - Or creating apk test file and install it
+```
 ./gradlew clean installSitDebug
+```
 ### In order to verify UT, please run below command:
+```
    ./gradlew :app:testSitDebugUnitTest
    ./gradlew :business:testDebugUnitTest
    ./gradlew :repository:testDebugUnitTest
-### In order to only verify decompike apk or rooted device, please run below command:
+```
+### In order to only verify decompike apk or rooted device or emulator, please run below command:
 - Using below command to create a apk test file
+```
 ./gradlew clean assembleProRelease
+```
 - Or creating apk test file and install it
+```
 ./gradlew clean installProRelease
-
+```
 ## What I done so far?
-### Business checklist:
+### Business checklist: all
 1. The application is a simple Android application which is written by Java/Kotlin.
 2. The application is able to retrieve the weather information from OpenWeatherMaps
 API.
@@ -117,9 +126,11 @@ Programming language:
 5. Write Unit Tests
 - Status: Done
 - Note: using below command to run unit test for each of module: app, business, repository
+```
    ./gradlew :app:testSitDebugUnitTest
    ./gradlew :business:testDebugUnitTest
    ./gradlew :repository:testDebugUnitTest
+```
 6. AcceptanceTests
 - Status: done
 - Note: app is tested and cover errors.
@@ -138,23 +149,31 @@ Programming language:
 - Status: partial done
 - Note: app is protected by a third-party "dexprotector", the trial key is a month.
    In other to create a protected apk, using this command:
+```
    ./gradlew clean assembleProRelease
-   One thing,this apk will be crashed after loading because we need to ignore some libraries in app
+```
+   One thing,this apk will be crashed after loading in non rooted device because we need to ignore some libraries in app
    in proguard.pro
 ##### Rooteddevice
 - Status: done
 - Note: Using below command to create release apk
+```
     ./gradlew clean assembleProRelease
-   Then bring to a rooted device, it will show "You may run app in unsafe device, please change
+```
+   Then install to a rooted device, it will show "You may run app in unsafe device, please change
    device or use internet version"
 ##### Data transmission via network
 - Status: done
 - Note: I used SSL pinning to trust open weather website.
-In the source code, we can find at "com.architecture.cleanmvvm.core.di.RepositoryModule"
+In the source code, we can find at 
+```
+"com.architecture.cleanmvvm.core.di.RepositoryModule"
+```
 ##### Encryption for sensitive information
 - Status: done
 - Note: app used sqlcipher to encrypt database, we can save sensitive data with low security require.
-In the source code you can find at "package com.architecture.repository.weather.local.service.WeatherDatabase"
+In the source code you can find at 
+```"package com.architecture.repository.weather.local.service.WeatherDatabase"```
 10. Accessibility for Disability Supports:
 ##### Talkback:Useascreenreader.
 - Status: done
@@ -162,3 +181,4 @@ In the source code you can find at "package com.architecture.repository.weather.
 ##### Scaling Text: Display size and font size: To change the size of items on your screen, adjust the display size or font size.
 - Status: done
 - Note: add configuration to activity to apply font-change in the system.
+11. Please refer documents for database and clean architecture at path/weatherdemo/diagram
