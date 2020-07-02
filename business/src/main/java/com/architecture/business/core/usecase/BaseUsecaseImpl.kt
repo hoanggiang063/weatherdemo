@@ -1,5 +1,6 @@
 package com.architecture.business.core.usecase
 
+import android.util.Log
 import com.architecture.business.core.callback.BasePresentCallBack
 import com.architecture.business.core.exception.TechnicalException
 import com.architecture.business.core.repository.BaseRepository
@@ -21,7 +22,7 @@ abstract class BaseUsecaseImpl<Param, Result, CallBack : BasePresentCallBack<Res
         return CoroutineScope(subscriberContext).launch {
             // implement thread to call
             try {
-                var data: Result?
+                val data: Result?
                 data = bankRepository()
                 withContext(observerContext) {
                     handleSuccess(data, callback)

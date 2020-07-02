@@ -22,20 +22,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
         if (isLoadMainView()) {
-            hostFragment(WeatherFragment());
+            hostFragment(WeatherFragment())
         } else {
-            hostFragment(UnsafeFragment());
+            hostFragment(UnsafeFragment())
         }
     }
 
     private fun isLoadMainView(): Boolean {
-        return (BuildConfig.BUILD_TYPE == "release" && securityMonitor.isSafeEnviroment()) ||
+        return (BuildConfig.BUILD_TYPE == "release" && securityMonitor.isSafeEnvironment()) ||
                 BuildConfig.BUILD_TYPE == "debug"
     }
 
     private fun hostFragment(fragment: Fragment) {
         if (supportFragmentManager.findFragmentByTag(fragment.javaClass.simpleName) == null) {
-            var fragmentTransaction: FragmentTransaction =
+            val fragmentTransaction: FragmentTransaction =
                 supportFragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.container, fragment, fragment.javaClass.simpleName)
             fragmentTransaction.commit()

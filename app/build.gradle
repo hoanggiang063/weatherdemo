@@ -3,16 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-apply plugin: 'dexprotector'
-buildscript {
-    repositories {
-        flatDir { dirs '../dexprotector' }
-    }
-    dependencies {
-        classpath ':dexprotector-gradle-plugin'
-        classpath ':dexprotector'
-    }
-}
 android {
     compileSdkVersion rootProject.compileSdkVersion
 
@@ -42,14 +32,14 @@ android {
     buildTypes {
 
         debug {
-            minifyEnabled false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
         }
 
         release {
-            minifyEnabled false //using dexprotector to optimize instead of default
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            ext.set("dexprotector.configFile", "${projectDir}/dexprotector.xml")
             signingConfig signingConfigs.release
         }
     }
@@ -96,6 +86,8 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
 
     implementation "androidx.sqlite:sqlite:$sqliteVersion"
+
+    implementation "com.jaredrummler:android-shell:$androidShellVersion"
 
     implementation project(':business')
     implementation project(':repository')
