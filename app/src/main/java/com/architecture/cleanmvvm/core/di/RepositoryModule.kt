@@ -8,7 +8,8 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.module.module
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -18,33 +19,33 @@ private const val RELEASE_HTTP = "ReleaseHttp"
 
 val repositoryModule = module {
 
-    single(DEBUG_HTTP) {
+    single<Interceptor>(qualifier = named(DEBUG_HTTP)) {
         val debugInterceptor = HttpLoggingInterceptor()
         debugInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        debugInterceptor as Interceptor
+        debugInterceptor
     }
 
-    single(RELEASE_HTTP) {
+    single<Interceptor>(qualifier = named(RELEASE_HTTP)) {
         val releaseInterceptor = HttpLoggingInterceptor()
         releaseInterceptor.level = HttpLoggingInterceptor.Level.NONE
-        releaseInterceptor as Interceptor
+        releaseInterceptor
     }
 
-    single {
+    single<OkHttpClient> {
 
         val config: EnvConfiguration = get()
         val certificatePinner = CertificatePinner.Builder()
             .add(config.getEnvironmentUrl(), config.getSpinningKey())
             .build()
 
-        var interceptor:Interceptor = get(DEBUG_HTTP)
-        if(!BuildConfig.DEBUG) interceptor = get(RELEASE_HTTP)
+        var interceptor: Interceptor = get(qualifier = named(DEBUG_HTTP))
+        if (!BuildConfig.DEBUG) interceptor = get(qualifier = named(RELEASE_HTTP))
 
         OkHttpClient.Builder()
             .certificatePinner(certificatePinner)
             .addInterceptor(
                 interceptor
-        ).build() as OkHttpClient
+            ).build()
     }
 
     single {
@@ -58,12 +59,12 @@ val repositoryModule = module {
             .build() as Retrofit
     }
 
-    single(DATABASE) {
+    single(qualifier = named(DATABASE)) {
         val config: EnvConfiguration = get()
         WeatherDatabase.buildDatabase(androidContext(), config.getEnvironmentApiKey())
     }
     factory {
-        (get(DATABASE) as WeatherDatabase).weatherDao()
+        (get(qualifier = named(DATABASE)) as WeatherDatabase).weatherDao()
     }
 
 

@@ -23,8 +23,7 @@
 
 ### Using network-bound-resource pattern to cache data:
 - Reference: https://developer.android.com/topic/libraries/architecture/images/network-bound-resource.png
-### Using dexprotector for root, emulator detection, decompile apk:
-- Reference: https://dexprotector.com
+### Using code for root, proguard for decompile apk:
 ### Using Observer pattern to monitor data
 ### Using Dependency injection to decouple object, make it easier to test
 ### Configure multi environments for testing, production.
@@ -61,10 +60,10 @@
 - Json parser: Gson
 - Cache: Using SqlCipher
 - Multi-thread: Kotlin Coroutine
-- Testing: Mockito
+- Testing: Mockito for Unit Test, espresso and mockK for UI test
 - DAO: Room
 - Observer data: LiveData
-- Decompile apk and rooted detection: Dexprotector
+- Decompile apk and rooted detection: using code and proguard
 
 ## How to run?
 ### Please run below commands:
@@ -82,6 +81,11 @@
    ./gradlew :business:testDebugUnitTest
    ./gradlew :repository:testDebugUnitTest
 ```
+### In order to verify UI test, please run below command, note: android OS >= android P:
+```
+   ./gradlew connectedAndroidTest
+```
+
 ### In order to only verify decompike apk or rooted device or emulator, please run below command:
 - Using below command to create a apk test file
 ```
@@ -146,8 +150,7 @@ Programming language:
     via network.
 9. SecureAndroidappfrom:
 ##### DecompileAPK
-- Status: partial done
-- Note: app is protected by a third-party "dexprotector", the trial key is a month.
+- Status: done
    In other to create a protected apk, using this command:
 ```
    ./gradlew clean assembleProRelease
@@ -184,10 +187,10 @@ In the source code you can find at
 11. Please refer documents for database and clean architecture at path/weatherdemo/diagram
 
 ## Need to improve
-- Add ignore classes to dexprotector, so we can run release build in unrooted device
 - Modularization: separate features in modules in order to keep it clean, decoupling
 - Add BBD(business driven development) to test usecase and repository by using Cucumber.
 - Build a base class for Viewmodel, in base we will handle common cases such common failures cases.
 - Maybe we try to apply navigation among fragments.
 - Add mock modules for development, let say we test with mock when we wait for real api.
 - Add feature toggle to turn on/off new feature(maybe local)
+- Add Loggging in whole app

@@ -28,12 +28,14 @@ android {
         versionCode 1
         versionName "1.0"
         signingConfig signingConfigs.debug
+
+        testInstrumentationRunner "com.architecture.cleanmvvm.bootstrap.KoinTestRunner"
     }
     buildTypes {
 
         debug {
             minifyEnabled false
-            signingConfig signingConfigs.debug
+           // signingConfig signingConfigs.debug
         }
 
         release {
@@ -62,6 +64,14 @@ android {
                     'src/main/res-screens/weather',
             ]
         }
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    testOptions {
+        animationsDisabled = true
     }
 }
 
@@ -100,4 +110,9 @@ dependencies {
     testImplementation "com.android.support.test:testing-support-lib:$testingSupportLibVersion"
     testImplementation "androidx.arch.core:core-testing:$archCoreTestingVersion"
     testImplementation "org.mockito:mockito-android:$mockitoAndroid"
+
+    androidTestImplementation "androidx.test:runner:$androidRunnerVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "androidx.test:rules:$testRulesVersion"
+    androidTestImplementation "io.mockk:mockk-android:$mockkAndroidVersion"
 }

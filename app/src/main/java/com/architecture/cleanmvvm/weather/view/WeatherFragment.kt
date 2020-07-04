@@ -2,12 +2,15 @@ package com.architecture.cleanmvvm.weather.view
 
 import android.os.Bundle
 import android.os.SystemClock
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -24,8 +27,8 @@ class WeatherFragment : Fragment() {
         const val SEARCH_MIN_CHARACTER_LIMIT = 3
     }
 
-    private val searchView: SearchView by lazy {
-        view!!.findViewById<SearchView>(R.id.searchView)
+    private val searchView: AppCompatEditText by lazy {
+        view!!.findViewById<AppCompatEditText>(R.id.viewSearch)
     }
 
     private val btnGetWeather: AppCompatButton by lazy {
@@ -40,7 +43,7 @@ class WeatherFragment : Fragment() {
 
     private lateinit var weatherAdapter: WeatherAdapter
 
-    private val lastClickTime: Long = 0
+    private var lastClickTime: Long = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,16 +66,15 @@ class WeatherFragment : Fragment() {
             doSearch()
         }
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-            override fun onQueryTextChange(newText: String): Boolean {
+        searchView.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    doSearch()
+                    return true
+                }
                 return false
             }
 
-            override fun onQueryTextSubmit(query: String): Boolean {
-                doSearch()
-                return false
-            }
         })
         super.onViewCreated(view, savedInstanceState)
     }
@@ -80,12 +82,13 @@ class WeatherFragment : Fragment() {
     private fun doSearch() {
         clearScreenData()
         if (isValidToLoadData()) {
+            lastClickTime = SystemClock.elapsedRealtime()
             loadScreenData()
         }
     }
 
     private fun isValidToLoadData(): Boolean {
-        return (searchView.query.length >= SEARCH_MIN_CHARACTER_LIMIT) &&
+        return (searchView.text.toString().length >= SEARCH_MIN_CHARACTER_LIMIT) &&
                 (SystemClock.elapsedRealtime() - lastClickTime > 1000)
     }
 
@@ -142,10 +145,7 @@ class WeatherFragment : Fragment() {
     }
 
     private fun loadScreenData() {
-        searchView.query?.let { text ->
-            viewModel.loadWeather(text.toString())
-        }
-
+        viewModel.loadWeather(searchView.text.toString())
     }
 
     private fun showError(error: String) {

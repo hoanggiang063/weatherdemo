@@ -8,8 +8,8 @@ import com.architecture.repository.weather.cache.repository.WeatherCacheImpl
 import com.architecture.repository.weather.local.repository.WeatherLocalImpl
 import com.architecture.repository.weather.remote.repository.WeatherRemoteImpl
 import com.architecture.repository.weather.remote.service.WeatherRemoteService
-import org.koin.android.viewmodel.ext.koin.viewModel
-import org.koin.dsl.module.module
+import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val featureWeather = module {
@@ -26,16 +26,16 @@ val featureWeather = module {
         WeatherLocalImpl(get())
     }
 
-    factory {
+    factory<WeatherRepository> {
         WeatherCacheImpl(
             false,
             get(),
             get()
-        ) as WeatherRepository
+        )
     }
 
-    factory {
-        WeatherUseCaseImpl(get()) as WeatherUseCase
+    factory<WeatherUseCase> {
+        WeatherUseCaseImpl(get())
     }
 
     viewModel { WeatherViewModel(get(), get()) }

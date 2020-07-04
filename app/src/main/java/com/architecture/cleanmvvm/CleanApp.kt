@@ -2,8 +2,9 @@ package com.architecture.cleanmvvm
 
 import android.app.Application
 import com.architecture.cleanmvvm.core.di.appComponent
-import com.architecture.cleanmvvm.core.security.SecurityMonitor
-import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 open class CleanApp : Application() {
 
@@ -14,7 +15,12 @@ open class CleanApp : Application() {
 
     // CONFIGURATION ---
     open fun configureDi() =
-        startKoin(this, provideComponent())
+        //startKoin(this, provideComponent())
+        startKoin {
+            androidLogger()
+            androidContext(this@CleanApp)
+            modules(provideComponent())
+        }
 
     // PUBLIC API ---
     open fun provideComponent() = appComponent

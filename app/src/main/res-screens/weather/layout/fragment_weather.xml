@@ -5,13 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/viewSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:iconifiedByDefault="false"
-        android:contentDescription="@string/searchViewHint"
-        app:queryHint="@string/searchViewHint" />
+        android:contentDescription="@string/searchViewHint" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnGetWeather"
