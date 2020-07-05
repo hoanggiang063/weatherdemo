@@ -4,6 +4,17 @@
 ### For app architecture, I applied Clean Architecture + MVVM:
 - Reference: https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
 
+#### Reason: design a banking architecture can expose business and repository to:
+- Reuse usecases among viewmodels
+- Long live on technology change
+- Reuse among apps in android (app banking for consumer, app banking for sme, app for sold trader)
+- Reuse business (maybe repository) among platforms (android and iOS, just have prototype)
+
+#### Layers:
+- business layer: to present business, should depend on Kotlin only, not android 
+- repository layer: to present how to get data, should depend on business
+- presentation layer:  to present how to show data, should depend on business and repository
+
 ### For source code, I applied Clean code guideline such as:
 - Variable name should be meaningful
 - Function just do one thing
@@ -23,14 +34,35 @@
 
 ### Using network-bound-resource pattern to cache data:
 - Reference: https://developer.android.com/topic/libraries/architecture/images/network-bound-resource.png
-### Using code for root, proguard for decompile apk:
-### Using Observer pattern to monitor data
-### Using Dependency injection to decouple object, make it easier to test
-### Configure multi environments for testing, production.
+
+### Apply security practises:
+- Checking root
+- Prevent revert engineering
+- Prevent take screen-shot and record video
+- Don't allow backup
+- Using SSL pinning
+- Encrypt database(for sensitive data)
+
+### Using Observer pattern for data flow:
+- Using livedata between modelview and fragment
+- Using callabck between usecase and modelview
+
+### Using Dependency injection and scope:
+- Using Dependency injection
+- Using scope for object, global scope and view-scope
+
+### Configure multi environments:
+- SIT: testing environment with configuration
+- PRO: production environment with configuration
+
+### Testing practises:
+- Unit test: viewmodel test, usecase test, repository test
+- UI test: fragment test
+- Check unit test code coverage(jacoco)
 
 ## Code structure
 ### app module: presentation layer which included UI code
-- /src/main -> for UI feature
+- /src/main -> for UI features
 - /src/pro --> for config production environment
 - /src/sit --> for config test environment
 - /src/../core -> common things which used in application.
@@ -39,7 +71,7 @@
 - /src/../weather/viewmodel -> for viewmodel
 
 ### business module: business layer, include business code
-- /src/../weather/usecase --> include business usecase
+- /src/../weather/usecase --> include business usecase and implementation
 - /src/../weather/repository --> include interface to get data for usecase
 - /src/../weather/info --> include business entities
 - /src/../weather/callback --> provide interface to notify result to viewmodel.
@@ -61,8 +93,9 @@
 - Cache: Using SqlCipher
 - Multi-thread: Kotlin Coroutine
 - Testing: Mockito for Unit Test, espresso and mockK for UI test
+- CodeCoverage: jacoco
 - DAO: Room
-- Observer data: LiveData
+- Observer data: LiveData + callback
 - Decompile apk and rooted detection: using code and proguard
 
 ## How to run?
@@ -80,6 +113,13 @@
    ./gradlew :app:testSitDebugUnitTest
    ./gradlew :business:testDebugUnitTest
    ./gradlew :repository:testDebugUnitTest
+```
+
+### In order to verify UT with code coverage, please run below command:
+```
+   ./gradlew testSitDebugUnitTestCoverage
+   ./gradlew :business:testDebugUnitTestCoverage
+   ./gradlew :repository:testDebugUnitTestCoverage
 ```
 ### In order to verify UI test, please run below command, note: android OS >= android P:
 ```
@@ -155,8 +195,6 @@ Programming language:
 ```
    ./gradlew clean assembleProRelease
 ```
-   One thing,this apk will be crashed after loading in non rooted device because we need to ignore some libraries in app
-   in proguard.pro
 ##### Rooteddevice
 - Status: done
 - Note: Using below command to create release apk
@@ -188,7 +226,7 @@ In the source code you can find at
 
 ## Need to improve
 - Modularization: separate features in modules in order to keep it clean, decoupling
-- Add BBD(business driven development) to test usecase and repository by using Cucumber.
+- Add BBD to test usecase and repository by using Cucumber.
 - Build a base class for Viewmodel, in base we will handle common cases such common failures cases.
 - Maybe we try to apply navigation among fragments.
 - Add mock modules for development, let say we test with mock when we wait for real api.

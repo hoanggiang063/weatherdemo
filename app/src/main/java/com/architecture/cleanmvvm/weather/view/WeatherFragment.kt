@@ -1,5 +1,6 @@
 package com.architecture.cleanmvvm.weather.view
 
+import android.content.Context
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.KeyEvent
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
@@ -21,6 +23,7 @@ import com.architecture.cleanmvvm.R
 import com.architecture.cleanmvvm.node1.demo.info.WeatherInfo
 import com.architecture.cleanmvvm.weather.viewmodel.WeatherViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class WeatherFragment : Fragment() {
     companion object {
@@ -79,7 +82,7 @@ class WeatherFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun doSearch() {
+    protected fun doSearch() {
         clearScreenData()
         if (isValidToLoadData()) {
             lastClickTime = SystemClock.elapsedRealtime()
@@ -153,6 +156,12 @@ class WeatherFragment : Fragment() {
     }
 
     private fun clearScreenData() {
+        searchView.clearFocus()
+        context?.let {
+            val inputManager =
+                context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(searchView.windowToken, 0)
+        }
         weatherAdapter.info.clear()
         weatherAdapter.notifyDataSetChanged()
     }
