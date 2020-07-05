@@ -121,6 +121,16 @@
    ./gradlew :business:testDebugUnitTestCoverage
    ./gradlew :repository:testDebugUnitTestCoverage
 ```
+Example as below will be log in console:
+```
+> Task :repository:testDebugUnitTestCoverage
+- instruction coverage rate is: 70.23%, minimum is 70%
+- branch coverage rate is: 70.23%, minimum is 70%
+- line coverage rate is: 70.23%, minimum is 70%
+- complexity coverage rate is: 70.23%, minimum is 70%
+- method coverage rate is: 70.23%, minimum is 70%
+- class coverage rate is: 70.23%, minimum is 70%
+```
 ### In order to verify UI test, please run below command, note: android OS >= android P:
 ```
    ./gradlew connectedAndroidTest
